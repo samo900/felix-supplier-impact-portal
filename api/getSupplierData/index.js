@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSupplierData = void 0;
-const functions_1 = require("@azure/functions");
 const jwt = __importStar(require("jsonwebtoken"));
 const crypto = __importStar(require("crypto"));
 async function getSupplierData(request, context) {
@@ -111,9 +110,5 @@ async function fetchSupplierData(accountId) {
         ]
     };
 }
-functions_1.app.http('getSupplierData', {
-    methods: ['GET'],
-    authLevel: 'anonymous',
-    handler: getSupplierData
-});
+exports.default = getSupplierData;
 //# sourceMappingURL=index.js.map

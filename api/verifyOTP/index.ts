@@ -84,8 +84,4 @@ export async function verifyOTP(request: HttpRequest, context: InvocationContext
   }
 }
 
-app.http('verifyOTP', {
-  methods: ['POST'],
-  authLevel: 'anonymous',
-  handler: verifyOTP
-});
+export default verifyOTP;

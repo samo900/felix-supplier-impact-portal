@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPowerBIToken = void 0;
-const functions_1 = require("@azure/functions");
 const jwt = __importStar(require("jsonwebtoken"));
 const crypto = __importStar(require("crypto"));
 async function getPowerBIToken(request, context) {
@@ -135,9 +134,5 @@ async function generatePowerBIEmbedToken(accountId, email) {
         accountId // Include for client-side verification
     };
 }
-functions_1.app.http('getPowerBIToken', {
-    methods: ['GET'],
-    authLevel: 'anonymous',
-    handler: getPowerBIToken
-});
+exports.default = getPowerBIToken;
 //# sourceMappingURL=index.js.map

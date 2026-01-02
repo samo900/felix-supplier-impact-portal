@@ -112,8 +112,4 @@ async function fetchSupplierData(accountId: string): Promise<SupplierData | null
   };
 }
 
-app.http('getSupplierData', {
-  methods: ['GET'],
-  authLevel: 'anonymous',
-  handler: getSupplierData
-});
+export default getSupplierData;

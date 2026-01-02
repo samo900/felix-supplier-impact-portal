@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendOTP = void 0;
-const functions_1 = require("@azure/functions");
 const communication_email_1 = require("@azure/communication-email");
 const crypto = __importStar(require("crypto"));
 // In-memory OTP storage (use Redis or Azure Table Storage in production)
@@ -126,9 +125,5 @@ async function getAccountIdForEmail(email) {
     // return result.rows[0]?.accountId || null;
     return email; // Placeholder
 }
-functions_1.app.http('sendOTP', {
-    methods: ['POST'],
-    authLevel: 'anonymous',
-    handler: sendOTP
-});
+exports.default = sendOTP;
 //# sourceMappingURL=index.js.map

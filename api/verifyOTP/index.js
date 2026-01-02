@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyOTP = void 0;
-const functions_1 = require("@azure/functions");
 const jwt = __importStar(require("jsonwebtoken"));
 const crypto = __importStar(require("crypto"));
 // Share this with sendOTP (use external storage in production)
@@ -90,9 +89,5 @@ async function verifyOTP(request, context) {
     }
 }
 exports.verifyOTP = verifyOTP;
-functions_1.app.http('verifyOTP', {
-    methods: ['POST'],
-    authLevel: 'anonymous',
-    handler: verifyOTP
-});
+exports.default = verifyOTP;
 //# sourceMappingURL=index.js.map

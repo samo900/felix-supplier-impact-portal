@@ -122,8 +122,4 @@ async function getAccountIdForEmail(email: string): Promise<string | null> {
   return email; // Placeholder
 }
 
-app.http('sendOTP', {
-  methods: ['POST'],
-  authLevel: 'anonymous',
-  handler: sendOTP
-});
+export default sendOTP;

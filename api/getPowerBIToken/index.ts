@@ -127,8 +127,4 @@ async function generatePowerBIEmbedToken(accountId: string, email: string) {
   };
 }
 
-app.http('getPowerBIToken', {
-  methods: ['GET'],
-  authLevel: 'anonymous',
-  handler: getPowerBIToken
-});
+export default getPowerBIToken;
