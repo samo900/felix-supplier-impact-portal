@@ -21,7 +21,6 @@ const Login: React.FC = () => {
 
     try {
       const response = await authService.sendOTP(email);
-      // @ts-ignore - dev_otp only exists in development
       if (response.dev_otp) {
         setDevOtp(response.dev_otp);
       }

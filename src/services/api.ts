@@ -4,8 +4,9 @@ import { SupplierData, PowerBIEmbedConfig } from '../types';
 const API_BASE = '/api';
 
 export const authService = {
-  async sendOTP(email: string): Promise<void> {
-    await axios.post(`${API_BASE}/sendOTP`, { email });
+  async sendOTP(email: string): Promise<{ success: boolean; dev_otp?: string }> {
+    const response = await axios.post(`${API_BASE}/sendOTP`, { email });
+    return response.data;
   },
 
   async verifyOTP(email: string, code: string): Promise<{ token: string; accountId: string; email: string }> {
