@@ -1,51 +1,27 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOTP = void 0;
-const crypto = __importStar(require("crypto"));
-// In-memory OTP storage (use Redis or Azure Table Storage in production)
+const crypto = require("crypto");
 const otpStore = new Map();
-async function sendOTP(request, context) {
+
+module.exports = async function (context, req) {
     context.log('Processing sendOTP request');
     try {
-        const body = await request.json();
+        const body = req.body;
         const { email } = body;
         if (!email || !isValidEmail(email)) {
-            return {
+            context.res = {
                 status: 400,
-                jsonBody: { error: "Valid email is required" }
+                body: { error: "Valid email is required" }
             };
+            return;
         }
         // TODO: Verify email exists in supplier database and get accountId
         // For now, we'll use email as accountId
         const accountId = await getAccountIdForEmail(email);
         if (!accountId) {
-            return {
+            context.res = {
                 status: 404,
-                jsonBody: { error: "Supplier not found. Please contact support." }
+                body: { error: "Supplier not found. Please contact support." }
             };
+            return;
         }
         // Generate 6-digit OTP
         const otpCode = crypto.randomInt(100000, 999999).toString();
@@ -58,70 +34,23 @@ async function sendOTP(request, context) {
         });
         // Development mode - return OTP in response
         context.log(`DEV MODE: OTP for ${email}: ${otpCode}`);
-        return {
+        context.res = {
             status: 200,
-            jsonBody: {
+            body: {
                 success: true,
                 message: "OTP sent successfully",
-                dev_otp: otpCode // In production, this would be sent via email
+                dev_otp: otpCode
             }
         };
-        /* Production email sending code (disabled for now)
-        const connectionString = process.env.COMMUNICATION_SERVICES_CONNECTION_STRING;
-        
-        if (!connectionString) {
-          context.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
-          return {
-            status: 500,
-            jsonBody: { error: "Email service not configured" }
-          };
-        }
-    
-        const { EmailClient } = require("@azure/communication-email");
-        const emailClient = new EmailClient(connectionString);
-        
-        const emailMessage = {
-          senderAddress: process.env.SENDER_EMAIL || "noreply@yourdomain.com",
-          content: {
-            subject: "Your Supplier Portal Access Code",
-            plainText: `Your one-time password is: ${otpCode}\n\nThis code will expire in 10 minutes.\n\nIf you didn't request this code, please ignore this email.`,
-            html: `
-              <html>
-                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                  <h2 style="color: #333;">Supplier Portal Access</h2>
-                  <p>Your one-time password is:</p>
-                  <div style="background-color: #f0f0f0; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
-                    ${otpCode}
-                  </div>
-                  <p style="color: #666;">This code will expire in 10 minutes.</p>
-                  <p style="color: #666; font-size: 12px;">If you didn't request this code, please ignore this email.</p>
-                </body>
-              </html>
-            `
-          },
-          recipients: {
-            to: [{ address: email }]
-          }
-        };
-    
-        const poller = await emailClient.beginSend(emailMessage);
-        await poller.pollUntilDone();
-    
-        return {
-          status: 200,
-          jsonBody: { message: "OTP sent successfully" }
-        };
-        */
     }
     catch (error) {
         context.error('Error sending OTP:', error);
-        return {
+        context.res = {
             status: 500,
-            jsonBody: { error: "Failed to send OTP" }
+            body: { error: "Failed to send OTP" }
         };
     }
-}
-exports.sendOTP = sendOTP;
+};
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -136,5 +65,4 @@ async function getAccountIdForEmail(email) {
     // return result.rows[0]?.accountId || null;
     return email; // Placeholder
 }
-module.exports = sendOTP;
 //# sourceMappingURL=index.js.map
