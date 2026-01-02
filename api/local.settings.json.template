@@ -1,0 +1,28 @@
+# Environment Variables Template
+# Copy this file to local.settings.json in the api folder
+
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    
+    # Azure Communication Services for sending OTP emails
+    "COMMUNICATION_SERVICES_CONNECTION_STRING": "endpoint=https://your-acs.communication.azure.com/;accesskey=your-key",
+    "SENDER_EMAIL": "noreply@yourdomain.com",
+    
+    # PowerBI Configuration
+    "POWERBI_CLIENT_ID": "your-service-principal-client-id",
+    "POWERBI_CLIENT_SECRET": "your-service-principal-secret",
+    "POWERBI_TENANT_ID": "your-azure-tenant-id",
+    "POWERBI_WORKSPACE_ID": "your-powerbi-workspace-id",
+    "POWERBI_REPORT_ID": "your-powerbi-report-id",
+    "POWERBI_DATASET_ID": "your-powerbi-dataset-id",
+    
+    # Session Management
+    "SESSION_SECRET": "generate-a-long-random-string-here",
+    
+    # Database Connection (your existing supplier database)
+    "DATABASE_CONNECTION_STRING": "your-database-connection-string"
+  }
+}

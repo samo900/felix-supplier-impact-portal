@@ -1,0 +1,11 @@
+/* The Felix Project Logo Placeholder */
+/* Replace public/felix-logo.png with actual logo */
+
+PLACEHOLDER - Add The Felix Project logo as:
+- public/felix-logo.png (192x192 or larger)
+
+If you don't have the logo file yet, you can:
+1. Extract it from https://agreeable-coast-093a0c203.3.azurestaticapps.net/
+2. Or use an orange circle as placeholder
+
+For now, the app will show a broken image icon until you add the logo file.

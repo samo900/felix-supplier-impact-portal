@@ -1,0 +1,49 @@
+{
+  "name": "supplier-impact-portal",
+  "version": "1.0.0",
+  "description": "Supplier impact tracking portal with OTP authentication and row-level security",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "swa:start": "swa start http://localhost:3000 --api-location api",
+    "swa:build": "npm run build && npm run build:api",
+    "build:api": "cd api && npm install && npm run build"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^3.7.0",
+    "@azure/msal-react": "^2.0.9",
+    "powerbi-client": "^2.23.0",
+    "powerbi-client-react": "^1.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "react-scripts": "5.0.1",
+    "typescript": "^5.3.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  background: var(--felix-green); /* Felix Green background */
+}
+
+.login-logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.tagline {
+  color: #ffffff; /* White text on Felix Green background */
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: var(--spacing-sm);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.login-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-2xl);
+  width: 100%;
+  max-width: 480px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.login-header h1 {
+  font-size: 2rem;
+  color: var(--felix-green);
+  margin-bottom: var(--spacing-sm);
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+}
+
+.login-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form button {
+  margin-bottom: var(--spacing-md);
+}
+
+.otp-input {
+  font-size: 1.5rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.dev-otp {
+  padding: var(--spacing-md);
+  background-color: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.dev-otp strong {
+  font-size: 1.25rem;
+  letter-spacing: 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: var(--spacing-xl);
+  }
+  
+  .login-header h1 {
+    font-size: 1.5rem;
+  }
+}

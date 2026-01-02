@@ -1,0 +1,44 @@
+.powerbi-container {
+  width: 100%;
+  margin-top: var(--spacing-lg);
+}
+
+.powerbi-report {
+  width: 100%;
+  height: 600px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.powerbi-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+
+.powerbi-error {
+  padding: var(--spacing-lg);
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.powerbi-note {
+  margin-top: var(--spacing-md);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .powerbi-report {
+    height: 400px;
+  }
+}
