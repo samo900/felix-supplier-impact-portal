@@ -122,4 +122,4 @@ async function getAccountIdForEmail(email: string): Promise<string | null> {
   return email; // Placeholder
 }
 
-export default sendOTP;
+module.exports = sendOTP;

@@ -89,5 +89,5 @@ async function verifyOTP(request, context) {
     }
 }
 exports.verifyOTP = verifyOTP;
-exports.default = verifyOTP;
+module.exports = verifyOTP;
 //# sourceMappingURL=index.js.map

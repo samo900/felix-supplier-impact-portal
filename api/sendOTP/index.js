@@ -125,5 +125,5 @@ async function getAccountIdForEmail(email) {
     // return result.rows[0]?.accountId || null;
     return email; // Placeholder
 }
-exports.default = sendOTP;
+module.exports = sendOTP;
 //# sourceMappingURL=index.js.map

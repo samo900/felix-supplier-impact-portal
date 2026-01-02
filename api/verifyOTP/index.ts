@@ -84,4 +84,4 @@ export async function verifyOTP(request: HttpRequest, context: InvocationContext
   }
 }
 
-export default verifyOTP;
+module.exports = verifyOTP;

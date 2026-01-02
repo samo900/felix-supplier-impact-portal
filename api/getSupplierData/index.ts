@@ -112,4 +112,4 @@ async function fetchSupplierData(accountId: string): Promise<SupplierData | null
   };
 }
 
-export default getSupplierData;
+module.exports = getSupplierData;

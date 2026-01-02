@@ -134,5 +134,5 @@ async function generatePowerBIEmbedToken(accountId, email) {
         accountId // Include for client-side verification
     };
 }
-exports.default = getPowerBIToken;
+module.exports = getPowerBIToken;
 //# sourceMappingURL=index.js.map

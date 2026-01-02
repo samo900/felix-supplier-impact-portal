@@ -110,5 +110,5 @@ async function fetchSupplierData(accountId) {
         ]
     };
 }
-exports.default = getSupplierData;
+module.exports = getSupplierData;
 //# sourceMappingURL=index.js.map

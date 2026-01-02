@@ -127,4 +127,4 @@ async function generatePowerBIEmbedToken(accountId: string, email: string) {
   };
 }
 
-export default getPowerBIToken;
+module.exports = getPowerBIToken;
