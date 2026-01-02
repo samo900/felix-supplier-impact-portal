@@ -53,10 +53,11 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-        <img src="/felix-logo.png" alt="The Felix Project" className="login-logo" />
-        <h1>Supplier Impact Portal</h1>
-        <p>View the impact of your food donations</p>
-        <p className="tagline">The Felix Project</p>
+          <img src="/felix-logo.png" alt="The Felix Project" className="login-logo" />
+          <h1>Supplier Impact Portal</h1>
+          <p>View the impact of your food donations</p>
+          <p className="tagline">The Felix Project</p>
+        </div>
 
         {!otpSent ? (
           <form onSubmit={handleSendOTP} className="login-form">
