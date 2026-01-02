@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { SupplierData, PowerBIEmbedConfig } from '../types';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://felix-allocations-api.azurewebsites.net/api';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://felix-supplier-api.azurewebsites.net/api';
 
 export const authService = {
   async sendOTP(email: string): Promise<{ success: boolean; dev_otp?: string }> {
