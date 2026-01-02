@@ -14,9 +14,25 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  // Dev mode: Skip OTP for @thefelixproject.org emails
+  const handleDevLogin = () => {
+    if (email.endsWith('@thefelixproject.org')) {
+      const mockToken = 'dev-token-' + Date.now();
+      login(email, mockToken, 'dev-account');
+      navigate('/dashboard');
+    }
+  };
+
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    // Dev bypass for Felix Project emails
+    if (email.endsWith('@thefelixproject.org')) {
+      handleDevLogin();
+      return;
+    }
+    
     setLoading(true);
 
     try {
