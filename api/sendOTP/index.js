@@ -4,7 +4,8 @@ const otpStore = new Map();
 module.exports = async function (context, req) {
     context.log('Processing sendOTP request');
     try {
-        const body = req.body;
+        const body = req.body || {};
+        context.log('Request body:', JSON.stringify(body));
         const { email } = body;
         if (!email || !isValidEmail(email)) {
             context.res = {
