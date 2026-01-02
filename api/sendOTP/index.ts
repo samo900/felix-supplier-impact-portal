@@ -1,5 +1,4 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
-import { EmailClient } from "@azure/communication-email";
+import { HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import * as crypto from "crypto";
 
 // In-memory OTP storage (use Redis or Azure Table Storage in production)
@@ -45,22 +44,30 @@ export async function sendOTP(request: HttpRequest, context: InvocationContext):
       accountId
     });
 
-    // Send email via Azure Communication Services
+    // Development mode - return OTP in response
+    context.log(`DEV MODE: OTP for ${email}: ${otpCode}`);
+    
+    return {
+      status: 200,
+      jsonBody: { 
+        success: true,
+        message: "OTP sent successfully",
+        dev_otp: otpCode // In production, this would be sent via email
+      }
+    };
+    
+    /* Production email sending code (disabled for now)
     const connectionString = process.env.COMMUNICATION_SERVICES_CONNECTION_STRING;
     
     if (!connectionString) {
       context.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
-      // In development, just log the OTP
-      context.log(`OTP for ${email}: ${otpCode}`);
       return {
-        status: 200,
-        jsonBody: { 
-          message: "OTP sent successfully",
-          dev_otp: otpCode // Remove in production!
-        }
+        status: 500,
+        jsonBody: { error: "Email service not configured" }
       };
     }
 
+    const { EmailClient } = require("@azure/communication-email");
     const emailClient = new EmailClient(connectionString);
     
     const emailMessage = {
@@ -94,6 +101,7 @@ export async function sendOTP(request: HttpRequest, context: InvocationContext):
       status: 200,
       jsonBody: { message: "OTP sent successfully" }
     };
+    */
 
   } catch (error) {
     context.error('Error sending OTP:', error);

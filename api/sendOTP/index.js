@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendOTP = void 0;
-const communication_email_1 = require("@azure/communication-email");
 const crypto = __importStar(require("crypto"));
 // In-memory OTP storage (use Redis or Azure Table Storage in production)
 const otpStore = new Map();
@@ -57,50 +56,62 @@ async function sendOTP(request, context) {
             expiresAt,
             accountId
         });
-        // Send email via Azure Communication Services
-        const connectionString = process.env.COMMUNICATION_SERVICES_CONNECTION_STRING;
-        if (!connectionString) {
-            context.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
-            // In development, just log the OTP
-            context.log(`OTP for ${email}: ${otpCode}`);
-            return {
-                status: 200,
-                jsonBody: {
-                    message: "OTP sent successfully",
-                    dev_otp: otpCode // Remove in production!
-                }
-            };
-        }
-        const emailClient = new communication_email_1.EmailClient(connectionString);
-        const emailMessage = {
-            senderAddress: process.env.SENDER_EMAIL || "noreply@yourdomain.com",
-            content: {
-                subject: "Your Supplier Portal Access Code",
-                plainText: `Your one-time password is: ${otpCode}\n\nThis code will expire in 10 minutes.\n\nIf you didn't request this code, please ignore this email.`,
-                html: `
-          <html>
-            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-              <h2 style="color: #333;">Supplier Portal Access</h2>
-              <p>Your one-time password is:</p>
-              <div style="background-color: #f0f0f0; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
-                ${otpCode}
-              </div>
-              <p style="color: #666;">This code will expire in 10 minutes.</p>
-              <p style="color: #666; font-size: 12px;">If you didn't request this code, please ignore this email.</p>
-            </body>
-          </html>
-        `
-            },
-            recipients: {
-                to: [{ address: email }]
-            }
-        };
-        const poller = await emailClient.beginSend(emailMessage);
-        await poller.pollUntilDone();
+        // Development mode - return OTP in response
+        context.log(`DEV MODE: OTP for ${email}: ${otpCode}`);
         return {
             status: 200,
-            jsonBody: { message: "OTP sent successfully" }
+            jsonBody: {
+                success: true,
+                message: "OTP sent successfully",
+                dev_otp: otpCode // In production, this would be sent via email
+            }
         };
+        /* Production email sending code (disabled for now)
+        const connectionString = process.env.COMMUNICATION_SERVICES_CONNECTION_STRING;
+        
+        if (!connectionString) {
+          context.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
+          return {
+            status: 500,
+            jsonBody: { error: "Email service not configured" }
+          };
+        }
+    
+        const { EmailClient } = require("@azure/communication-email");
+        const emailClient = new EmailClient(connectionString);
+        
+        const emailMessage = {
+          senderAddress: process.env.SENDER_EMAIL || "noreply@yourdomain.com",
+          content: {
+            subject: "Your Supplier Portal Access Code",
+            plainText: `Your one-time password is: ${otpCode}\n\nThis code will expire in 10 minutes.\n\nIf you didn't request this code, please ignore this email.`,
+            html: `
+              <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                  <h2 style="color: #333;">Supplier Portal Access</h2>
+                  <p>Your one-time password is:</p>
+                  <div style="background-color: #f0f0f0; padding: 20px; text-align: center; font-size: 32px; font-weight: bold; letter-spacing: 5px; margin: 20px 0;">
+                    ${otpCode}
+                  </div>
+                  <p style="color: #666;">This code will expire in 10 minutes.</p>
+                  <p style="color: #666; font-size: 12px;">If you didn't request this code, please ignore this email.</p>
+                </body>
+              </html>
+            `
+          },
+          recipients: {
+            to: [{ address: email }]
+          }
+        };
+    
+        const poller = await emailClient.beginSend(emailMessage);
+        await poller.pollUntilDone();
+    
+        return {
+          status: 200,
+          jsonBody: { message: "OTP sent successfully" }
+        };
+        */
     }
     catch (error) {
         context.error('Error sending OTP:', error);
