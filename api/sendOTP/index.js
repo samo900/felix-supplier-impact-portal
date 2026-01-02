@@ -44,10 +44,10 @@ module.exports = async function (context, req) {
         };
     }
     catch (error) {
-        context.error('Error sending OTP:', error);
+        context.log.error('Error sending OTP:', error);
         context.res = {
             status: 500,
-            body: { error: "Failed to send OTP" }
+            body: { error: "Failed to send OTP", details: error.message }
         };
     }
 };
