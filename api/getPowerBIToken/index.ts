@@ -47,7 +47,7 @@ export async function getPowerBIToken(request: HttpRequest, context: InvocationC
     };
 
   } catch (error) {
-    context.log.error('Error generating PowerBI token:', error);
+    context.error('Error generating PowerBI token:', error);
     return {
       status: 500,
       jsonBody: { error: "Failed to generate PowerBI embed token" }

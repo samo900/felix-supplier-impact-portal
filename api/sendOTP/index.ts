@@ -49,7 +49,7 @@ export async function sendOTP(request: HttpRequest, context: InvocationContext):
     const connectionString = process.env.COMMUNICATION_SERVICES_CONNECTION_STRING;
     
     if (!connectionString) {
-      context.log.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
+      context.error("COMMUNICATION_SERVICES_CONNECTION_STRING not configured");
       // In development, just log the OTP
       context.log(`OTP for ${email}: ${otpCode}`);
       return {
@@ -96,7 +96,7 @@ export async function sendOTP(request: HttpRequest, context: InvocationContext):
     };
 
   } catch (error) {
-    context.log.error('Error sending OTP:', error);
+    context.error('Error sending OTP:', error);
     return {
       status: 500,
       jsonBody: { error: "Failed to send OTP" }

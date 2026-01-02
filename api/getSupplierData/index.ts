@@ -63,7 +63,7 @@ export async function getSupplierData(request: HttpRequest, context: InvocationC
     };
 
   } catch (error) {
-    context.log.error('Error fetching supplier data:', error);
+    context.error('Error fetching supplier data:', error);
     return {
       status: 500,
       jsonBody: { error: "Failed to fetch supplier data" }

@@ -76,7 +76,7 @@ export async function verifyOTP(request: HttpRequest, context: InvocationContext
     };
 
   } catch (error) {
-    context.log.error('Error verifying OTP:', error);
+    context.error('Error verifying OTP:', error);
     return {
       status: 500,
       jsonBody: { error: "Failed to verify OTP" }
