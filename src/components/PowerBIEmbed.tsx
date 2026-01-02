@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { models } from 'powerbi-client';
 import { PowerBIEmbed as PowerBIEmbedComponent } from 'powerbi-client-react';
 import { dataService } from '../services/api';
