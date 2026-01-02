@@ -61,9 +61,8 @@ const Dashboard: React.FC = () => {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="header-left">
-          <img src="/felix-logo.png" alt="The Felix Project" className="dashboard-logo" />
           <div>
-            <h1>Welcome, {data?.supplierName}</h1>
+            <h1>Supplier Impact Dashboard</h1>
             <p className="user-email">{email}</p>
           </div>
         </div>
@@ -71,61 +70,12 @@ const Dashboard: React.FC = () => {
       </header>
 
       <div className="dashboard-content">
-        <div className="impact-summary">
-          <h2>Your Impact Summary</h2>
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-icon">📦</div>
-              <div className="stat-value">{data?.totalDonations.toLocaleString()}</div>
-              <div className="stat-label">Total Donations</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon">🍽️</div>
-              <div className="stat-value">{data?.mealsProvided.toLocaleString()}</div>
-              <div className="stat-label">Meals Provided</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-icon">🌍</div>
-              <div className="stat-value">{data?.co2Saved.toLocaleString()} kg</div>
-              <div className="stat-label">CO₂ Saved</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="recent-donations">
-          <h2>Recent Donations</h2>
-          <table className="donations-table">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Weight (kg)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.recentDonations.map((donation, index) => (
-                <tr key={index}>
-                  <td>{new Date(donation.date).toLocaleDateString()}</td>
-                  <td>{donation.items}</td>
-                  <td>{donation.weight.toFixed(1)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
         <div className="powerbi-section">
           <div className="section-header">
-            <h2>Detailed Analytics</h2>
-            <button 
-              onClick={() => setShowPowerBI(!showPowerBI)} 
-              className="btn-primary"
-            >
-              {showPowerBI ? 'Hide' : 'View'} PowerBI Report
-            </button>
+            <h2>Your Impact Analytics</h2>
           </div>
           
-          {showPowerBI && token && (
+          {token && (
             <PowerBIEmbed token={token} />
           )}
         </div>
