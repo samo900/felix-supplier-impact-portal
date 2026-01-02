@@ -7,7 +7,7 @@ import PowerBIEmbed from './PowerBIEmbed';
 import '../styles/Dashboard.css';
 
 const Dashboard: React.FC = () => {
-  const { isAuthenticated, email, accountId, token, logout } = useAuth();
+  const { isAuthenticated, email, token, logout } = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState<SupplierData | null>(null);
   const [loading, setLoading] = useState(true);
