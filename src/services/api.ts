@@ -10,7 +10,7 @@ export const authService = {
   },
 
   async verifyOTP(email: string, code: string): Promise<{ token: string; accountId: string; email: string }> {
-    const response = await axios.post(`${API_BASE}/verifyOTP`, { email, code });
+    const response = await axios.post(`${API_BASE}/verifyOTP`, { email, otp: code });
     return response.data;
   }
 };
