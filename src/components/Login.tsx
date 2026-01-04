@@ -17,7 +17,14 @@ const Login: React.FC = () => {
   // Dev mode: Skip OTP for @thefelixproject.org emails
   const handleDevLogin = () => {
     if (email.endsWith('@thefelixproject.org')) {
-      const mockToken = 'dev-token-' + Date.now();
+      // Create a proper base64 token like the API expects
+      const tokenPayload = {
+        email: email,
+        accountId: 'dev-account',
+        role: 'supplier',
+        exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // 24 hours
+      };
+      const mockToken = btoa(JSON.stringify(tokenPayload));
       login(email, mockToken, 'dev-account');
       navigate('/dashboard');
     }
